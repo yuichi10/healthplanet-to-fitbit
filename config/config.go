@@ -18,8 +18,13 @@ type Config struct {
 		ClientID     string `yaml:"clientID"`
 		ClientSecret string `yaml:"clientSecret"`
 	} `yaml:"healthplanet"`
+	Fitbit struct {
+		ClientID     string `yaml:"clientID"`
+		ClientSecret string `yaml:"clientSecret"`
+	} `yaml:"fitbit"`
 }
 
+// New return config structure
 func New(path string) (config Config, err error) {
 	if path == "" {
 		home := ""

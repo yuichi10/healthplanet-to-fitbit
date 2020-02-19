@@ -10,3 +10,5 @@ https://www.healthplanet.jp/apis_account.do
 - fitbit api
 https://dev.fitbit.com/build/reference/web-api/
 
+- fitbit oauth設定
+
