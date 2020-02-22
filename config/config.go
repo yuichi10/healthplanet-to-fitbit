@@ -22,6 +22,12 @@ type Config struct {
 		ClientID     string `yaml:"clientID"`
 		ClientSecret string `yaml:"clientSecret"`
 	} `yaml:"fitbit"`
+	LastInput struct {
+		// 登録日付タイプで登録されたデータをどこまで入れたか
+		AddedDateCase string `yaml:"addedDateCase"`
+		// 測定日付タイプで登録されたデータをどこまで入れたか
+		MeasureDateCase string `yaml:"measureDateCase"`
+	} `yaml:"lastInput"`
 }
 
 // New return config structure

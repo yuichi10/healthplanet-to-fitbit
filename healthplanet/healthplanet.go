@@ -19,18 +19,6 @@ type api struct {
 	token *oauth2.Token
 }
 
-type InnerscanData struct {
-	BirthDate string `json:"birth_date"`
-	Data      []struct {
-		Date    string `json:"date"`
-		Keydata string `json:"keydata"`
-		Model   string `json:"model"`
-		Tag     string `json:"tag"`
-	} `json:"data"`
-	Height string `json:"height"`
-	Sex    string `json:"sex"`
-}
-
 type APIHandler interface {
 	OauthAuthURL() string
 	SetToken(code string)
