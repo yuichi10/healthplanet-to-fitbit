@@ -14,7 +14,7 @@ func getFitbitCode() string {
 	select {}
 }
 
-func prepareFitbit(config config.Config) {
+func prepareFitbit(config config.Config) fitbit.APIHandler {
 	fp := fitbit.New(config.Fitbit.ClientID, config.Fitbit.ClientSecret)
 	u := fp.OauthAuthURL()
 	fmt.Printf("Visit the URL for the auth dialog: %v\n", u)
@@ -38,9 +38,10 @@ func prepareFitbit(config config.Config) {
 	}
 
 	fp.SetToken(code)
+	return fp
 }
 
-func prepareHealthplanet(config config.Config) {
+func prepareHealthplanet(config config.Config) healthplanet.APIHandler {
 	hp := healthplanet.New(config.Healthplanet.ClientID, config.Healthplanet.ClientSecret)
 	u := hp.OauthAuthURL()
 	fmt.Printf("Visit the URL for the auth dialog: %v\n", u)
@@ -52,6 +53,7 @@ func prepareHealthplanet(config config.Config) {
 	}
 
 	hp.SetToken(code)
+	return hp
 }
 
 func main() {
@@ -59,6 +61,12 @@ func main() {
 	if err != nil {
 		log.Fatal("failed to load config file", err)
 	}
-	// prepareHealthplanet(config)
-	prepareFitbit(config)
+	_ = config
+	hp := prepareHealthplanet(config)
+	// prepareFitbit(config)
+	data, err := hp.Innerscan("1", "6021", "6022")
+	if err != nil {
+		log.Fatal("failed to get innerscan data", err)
+	}
+	fmt.Println(data)
 }
