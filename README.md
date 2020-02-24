@@ -28,3 +28,5 @@ fitbit:
   clientID:
   clientSecret:
 ```
+
+fitbitのoauthのcallbackは`localhost:8492`で固定値になっている
