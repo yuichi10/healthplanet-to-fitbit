@@ -12,3 +12,14 @@ https://dev.fitbit.com/build/reference/web-api/
 
 - fitbit oauth設定
 
+## 設定ファイル
+利用前に設定する項目
+```
+healthplanet:
+  userID:
+  clientID:
+  clientSecret:
+fitbit:
+  clientID:
+  clientSecret:
+```
