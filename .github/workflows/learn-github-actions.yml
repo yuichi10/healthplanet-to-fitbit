@@ -1,0 +1,10 @@
+name: learn-github-action
+on: [push]
+jobs:
+  go-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup go
+        uses: actions/setup-go@v2
+      - run: go version
