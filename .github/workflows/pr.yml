@@ -12,5 +12,7 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v2
       - run: go version
-      - run: PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+      - run: |
+          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo $PR_NUMBER
       - run: echo $PR_NUMBER
