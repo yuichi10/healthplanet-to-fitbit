@@ -3,7 +3,7 @@ on:
   # but only for the main branch
   pull_request:
     branches:
-      - main
+      - master
 jobs:
   go-version:
     runs-on: ubuntu-latest
