@@ -8,12 +8,12 @@ on:
 jobs:
   pr-go-version:
     runs-on: ubuntu-latest
-    services:
-      cloud_sql_proxy:
-        image: gcr.io/cloudsql-docker/gce-proxy:1.16
-        options: '/cloud_sql_proxy -instances=champs-dev-13804:asia-northeast1:champs-dev-postgre=tcp:0.0.0.0:5432'
-        ports:
-          - 5432:5432
+    # services:
+    #   cloud_sql_proxy:
+    #     image: gcr.io/cloudsql-docker/gce-proxy:1.16
+    #     options: '/cloud_sql_proxy -instances=champs-dev-13804:asia-northeast1:champs-dev-postgre=tcp:0.0.0.0:5432'
+    #     ports:
+    #       - 5432:5432
     steps:
       - uses: actions/checkout@v2
       - name: Setup go
