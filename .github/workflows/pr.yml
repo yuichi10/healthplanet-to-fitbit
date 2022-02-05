@@ -3,12 +3,55 @@ on:
   # but only for the main branch
   pull_request:
     branches:
-      - main
+      - master
+
 jobs:
-  go-version:
+  pr-go-version:
     runs-on: ubuntu-latest
+    outputs:
+      changed_packages: ${{ steps.changed_packages.outputs.changed_packages }}
     steps:
       - uses: actions/checkout@v2
-      - name: Setup go
-        uses: actions/setup-go@v2
-      - run: go version
+        with:
+          fetch-depth: 0
+      - id: find-packages
+        run: echo "::set-output name=package::{\"package\":[$(ls packages | awk '{printf "\"%s\",", $1}')]}"
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v14.3
+        with:
+          path: packages
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+      - id: changed_packages
+        run: |
+          all_changed_packages=()
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            pack=$(echo $file | awk -F '/' '{print $2}')
+            if [ -d packages/${pack} ]; then
+              all_changed_packages+=( ${pack} )
+            fi
+          done
+          changed_packages=$(printf "\"%s\"\n" "${all_changed_packages[@]}" | sort -u )
+          result=$(echo ${changed_packages[*]} | sed -e "s/ /,/g")
+          echo $result
+          echo "{\"package\":[$(echo ${changed_packages[*]} | sed -e "s/ /,/g")]}"
+          echo "::set-output name=changed_packages::{\"package\":[$(echo ${changed_packages[*]} | sed -e "s/ /,/g")]}"
+  use_diff:
+    needs: [pr-go-version]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJSON(needs.pr-go-version.outputs.changed_packages)}}
+    steps:
+      - name: check diff
+        run: |
+          echo ${{ needs.pr-go-version.outputs.changed_packages }}
+          ls packages/${{ matrix.package }}
+
+      # - run: |
+      #     # docker run -d -ti --rm -p 127.0.0.1:5432:5432 gcr.io/cloudsql-docker/gce-proxy:1.16 /cloud_sql_proxy -instances=champs-dev-13804:asia-northeast1:champs-dev-postgre=tcp:0.0.0.0:5432
+      #     export PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+      #     echo $PR_NUMBER
