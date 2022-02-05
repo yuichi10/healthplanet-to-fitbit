@@ -13,11 +13,26 @@ jobs:
     #     image: gcr.io/cloudsql-docker/gce-proxy:1.16
     #     options: '/cloud_sql_proxy -instances=champs-dev-13804:asia-northeast1:champs-dev-postgre=tcp:0.0.0.0:5432'
     #     ports:
-    #       - 5432:5432
+    #       - 5432:5432 
     steps:
       - uses: actions/checkout@v2
       - name: Setup go
         uses: actions/setup-go@v2
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v14.3
+        with:
+          path: sample
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
       - run: go version
       # - run: |
       #     # docker run -d -ti --rm -p 127.0.0.1:5432:5432 gcr.io/cloudsql-docker/gce-proxy:1.16 /cloud_sql_proxy -instances=champs-dev-13804:asia-northeast1:champs-dev-postgre=tcp:0.0.0.0:5432

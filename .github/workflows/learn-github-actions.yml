@@ -8,3 +8,4 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v2
       - run: go version
+
