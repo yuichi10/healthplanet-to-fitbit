@@ -44,7 +44,7 @@ jobs:
     needs: [pr-go-version]
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJSON(needs.setup.outputs.changed_packages)}}
+      matrix: ${{fromJSON(needs.pr-go-version.outputs.changed_packages)}}
     steps:
       - name: check diff
         run: |
