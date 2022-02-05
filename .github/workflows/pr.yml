@@ -32,7 +32,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             pack=$(echo $file | awk -F '/' '{print $2}')
             if [ -d packages/${pack} ]; then
-              all_changed_packages+=( ${pack} )
+              all_changed_packages+=( "\"${pack}\"" )
             fi
           done
           changed_packages=$(printf "%s\n" "${all_changed_packages[@]}" | sort -u )
