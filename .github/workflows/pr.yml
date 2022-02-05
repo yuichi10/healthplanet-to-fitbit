@@ -31,7 +31,7 @@ jobs:
           all_changed_packages=()
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             pack=$(echo $file | awk -F '/' '{print $2}')
-            if [ `ls packages | grep ${pack}` ]; then
+            if [ `ls -d packages/${pack}` ]; then
               all_changed_packages+=( $pack )
             fi
           done
