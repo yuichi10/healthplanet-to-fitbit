@@ -32,7 +32,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             pack=$(echo $file | awk -F '/' '{print $2}')
             if [ -d packages/${pack} ]; then
-              all_changed_packages+=( "\"${pack}\"" )
+              all_changed_packages+=( ${pack} )
             fi
           done
           changed_packages=$(printf "%s\n" "${all_changed_packages[@]}" | sort -u )
@@ -49,7 +49,7 @@ jobs:
       - name: check diff
         run: |
           echo ${{ needs.pr-go-version.outputs.changed_packages }}
-          ls ${{ matrix.package }}
+          ls packages/${{ matrix.package }}
 
       # - run: |
       #     # docker run -d -ti --rm -p 127.0.0.1:5432:5432 gcr.io/cloudsql-docker/gce-proxy:1.16 /cloud_sql_proxy -instances=champs-dev-13804:asia-northeast1:champs-dev-postgre=tcp:0.0.0.0:5432
