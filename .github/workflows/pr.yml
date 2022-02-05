@@ -36,6 +36,8 @@ jobs:
             fi
           done
           changed_packages=$(printf "%s\n" "${all_changed_packages[@]" | sort -u )
+          echo $changed_packages
+
           echo "::set-output name=changed_packages::${changed_packages}"
   use_diff:
     needs: [pr-go-version]
