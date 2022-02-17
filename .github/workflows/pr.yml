@@ -14,4 +14,4 @@ jobs:
       - run: go version
       - run: yq
       - run: snap install yq
-      - run: echo 'hi'
+      - run: echo 'hi2'
