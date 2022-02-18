@@ -11,5 +11,5 @@ jobs:
       - run: |
           wget -qO yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           chmod a+x yq
-      - run: ./yq help
+      - run: ./yq --version
       - run: snap install yq
